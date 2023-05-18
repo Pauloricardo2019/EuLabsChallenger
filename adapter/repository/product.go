@@ -31,6 +31,22 @@ func (p *productRepository) Create(ctx context.Context, product *model.Product) 
 	return product, nil
 }
 
+func (p *productRepository) GetCount(ctx context.Context) (int64, error) {
+	conn, err := p.getConnection(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	products := make([]model.Product, 0)
+	var count int64
+
+	if err = conn.Find(&products).Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func (p *productRepository) GetByID(ctx context.Context, id uint64) (bool, *model.Product, error) {
 	conn, err := p.getConnection(ctx)
 	if err != nil {
@@ -51,7 +67,7 @@ func (p *productRepository) GetByID(ctx context.Context, id uint64) (bool, *mode
 	return true, product, nil
 }
 
-func (p *productRepository) GetAll(ctx context.Context, pagination *model.Pagination) ([]model.Product, error) {
+func (p *productRepository) GetAll(ctx context.Context, limit, offset int) ([]model.Product, error) {
 	conn, err := p.getConnection(ctx)
 	if err != nil {
 		return nil, err
@@ -59,7 +75,10 @@ func (p *productRepository) GetAll(ctx context.Context, pagination *model.Pagina
 
 	products := make([]model.Product, 0)
 
-	if err = conn.Find(&products).Error; err != nil {
+	if err = conn.
+		Limit(limit).
+		Offset(offset).
+		Find(&products).Error; err != nil {
 		return nil, err
 	}
 

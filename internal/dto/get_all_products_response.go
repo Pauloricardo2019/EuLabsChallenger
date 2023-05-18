@@ -1,5 +1,10 @@
 package dto
 
+import (
+	"eulabs_challenger/internal/model"
+	"time"
+)
+
 type ProductPagination struct {
 	Limit  int   `json:"limit"`
 	Offset int   `json:"offset"`
@@ -12,16 +17,16 @@ type GetAllProductsResponse struct {
 }
 
 type Product struct {
-	ID          uint64  `json:"id"`
-	Name        string  `json:"name"`
-	Description string  `json:"description"`
-	Price       float64 `json:"price"`
-	Quantity    int     `json:"quantity"`
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
+	ID          uint64    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Price       float64   `json:"price"`
+	Quantity    int       `json:"quantity"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
-func (g *GetAllProductsResponse) ParseFromProductVO(products []Product, limit, offset int, total int64) {
+func (g *GetAllProductsResponse) ParseFromProductVO(products []model.Product, limit, offset int, total int64) {
 	g.Pagination.Limit = limit
 	g.Pagination.Offset = offset
 	g.Pagination.Total = total

@@ -3,7 +3,7 @@ package rest
 import "github.com/labstack/echo/v4"
 
 type healthCheckController interface {
-	HealthCheck()
+	HealthCheck(c *echo.Context)
 }
 
 type productController interface {

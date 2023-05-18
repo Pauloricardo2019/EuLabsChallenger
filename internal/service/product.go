@@ -19,12 +19,16 @@ func (p *productService) Create(ctx context.Context, product *model.Product) (*m
 	return p.productRepository.Create(ctx, product)
 }
 
+func (p *productService) GetCount(ctx context.Context) (int64, error) {
+	return p.productRepository.GetCount(ctx)
+}
+
 func (p *productService) GetByID(ctx context.Context, id uint64) (bool, *model.Product, error) {
 	return p.productRepository.GetByID(ctx, id)
 }
 
-func (p *productService) GetAll(ctx context.Context, pagination *model.Pagination) ([]model.Product, error) {
-	return p.productRepository.GetAll(ctx, pagination)
+func (p *productService) GetAll(ctx context.Context, limit, offset int) ([]model.Product, error) {
+	return p.productRepository.GetAll(ctx, limit, offset)
 }
 
 func (p *productService) Update(ctx context.Context, product *model.Product) (*model.Product, error) {
