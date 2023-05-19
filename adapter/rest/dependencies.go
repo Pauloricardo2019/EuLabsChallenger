@@ -4,14 +4,14 @@ import "github.com/labstack/echo/v4"
 
 type (
 	healthCheckController interface {
-		HealthCheck(c echo.Context)
+		HealthCheck(c echo.Context) error
 	}
 
 	productController interface {
-		CreateProduct(c echo.Context)
-		GetProductByID(c echo.Context)
-		GetAllProducts(c echo.Context)
-		UpdateProduct(c echo.Context)
-		DeleteProduct(c echo.Context)
+		CreateProduct(c echo.Context) error
+		GetProductByID(c echo.Context) error
+		GetAllProducts(c echo.Context) error
+		UpdateProduct(c echo.Context) error
+		DeleteProduct(c echo.Context) error
 	}
 )

@@ -19,52 +19,46 @@ func NewControllerProduct(productFacade productFacade) *productController {
 	}
 }
 
-func (p *productController) CreateProduct(c echo.Context) {
+func (p *productController) CreateProduct(c echo.Context) error {
 
 	ctx := context.Background()
 
 	createProduct := &dto.CreateProductRequest{}
 
 	if err := c.Bind(createProduct); err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	product, err := p.productFacade.CreateProduct(ctx, createProduct)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	c.JSON(http.StatusCreated, product)
-
+	return c.JSON(http.StatusCreated, product)
 }
 
-func (p *productController) GetProductByID(c echo.Context) {
+func (p *productController) GetProductByID(c echo.Context) error {
 	ctx := context.Background()
 
 	paramID, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	product, err := p.productFacade.GetByIDProduct(ctx, paramID)
 	if err != nil {
 		switch {
 		case errors.Is(err, errors.New("product not found")):
-			c.JSON(http.StatusNotFound, err)
+			return c.JSON(http.StatusNotFound, err)
 		default:
-			c.JSON(http.StatusInternalServerError, err)
+			return c.JSON(http.StatusInternalServerError, err)
 		}
-		return
 	}
 
-	c.JSON(http.StatusOK, product)
-
+	return c.JSON(http.StatusOK, product)
 }
 
-func (p *productController) GetAllProducts(c echo.Context) {
+func (p *productController) GetAllProducts(c echo.Context) error {
 	ctx := context.Background()
 
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
@@ -78,53 +72,46 @@ func (p *productController) GetAllProducts(c echo.Context) {
 
 	products, err := p.productFacade.GetAllProducts(ctx, limit, offset)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	c.JSON(http.StatusOK, products)
+	return c.JSON(http.StatusOK, products)
 }
 
-func (p *productController) UpdateProduct(c echo.Context) {
+func (p *productController) UpdateProduct(c echo.Context) error {
 	ctx := context.Background()
 
 	productID, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	updateProduct := &dto.UpdateProductRequest{}
 
 	if err = c.Bind(updateProduct); err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	err = p.productFacade.UpdateProduct(ctx, productID, updateProduct)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	c.JSON(http.StatusOK, "Product updated successfully")
-
+	return c.JSON(http.StatusOK, "Product updated successfully")
 }
 
-func (p *productController) DeleteProduct(c echo.Context) {
+func (p *productController) DeleteProduct(c echo.Context) error {
 	ctx := context.Background()
 
 	productID, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	err = p.productFacade.DeleteProduct(ctx, productID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	c.JSON(http.StatusOK, "Product deleted successfully")
+	return c.JSON(http.StatusOK, "Product deleted successfully")
 }

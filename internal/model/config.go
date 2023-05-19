@@ -1,7 +1,7 @@
 package model
 
 type Config struct {
-	RestPort string
+	RestPort int
 	DBConfig DBConfig
 }
 

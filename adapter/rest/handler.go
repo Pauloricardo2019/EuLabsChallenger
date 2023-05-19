@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"net/http"
 )
 
@@ -17,7 +18,7 @@ type ServerRest struct {
 	httpServer  *http.Server
 	Engine      *echo.Echo
 	config      *model.Config
-	controllers *Controllers
+	controllers Controllers
 }
 
 func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
@@ -29,7 +30,7 @@ func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 	server := &ServerRest{
 		Engine:      e,
 		config:      cfg,
-		controllers: controllers,
+		controllers: *controllers,
 	}
 
 	server.registerRoutes()
@@ -37,8 +38,10 @@ func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 }
 
 func (s *ServerRest) registerRoutes() {
-	routeV1 := s.Engine.Group("/v1")
+	routeV1 := s.Engine.Group("eulabs/v1")
 	{
+		routeV1.GET("/swagger/*", echoSwagger.WrapHandler)
+
 		routeV1.GET("/health", s.controllers.HealthCheckController.HealthCheck)
 
 		productGroup := routeV1.Group("/product")
