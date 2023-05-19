@@ -10,7 +10,7 @@ type productFacade struct {
 	productService productService
 }
 
-func NewProductFacade(productService productService) ProductFacade {
+func NewProductFacade(productService productService) *productFacade {
 	return &productFacade{
 		productService: productService,
 	}

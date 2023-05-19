@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"eulabs_challenger/adapter/provider"

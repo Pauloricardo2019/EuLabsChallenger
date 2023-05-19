@@ -16,7 +16,13 @@ func NewConfig() *config {
 
 func (c *config) GetConfig() *model.Config {
 
-	c.cfg.RestPort = os.Getenv("REST_PORT")
+	port := os.Getenv("REST_PORT")
+
+	if port != "" {
+		c.cfg.RestPort = port
+	} else {
+		c.cfg.RestPort = "8080"
+	}
 
 	c.cfg.DBConfig = model.DBConfig{
 		Username: os.Getenv("DB_USERNAME"),

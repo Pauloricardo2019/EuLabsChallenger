@@ -49,9 +49,7 @@ func (s *ServerRest) registerRoutes() {
 			productGroup.PUT("/:id", s.controllers.ProductController.UpdateProduct)
 			productGroup.DELETE("/:id", s.controllers.ProductController.DeleteProduct)
 		}
-
 	}
-
 }
 
 func (s *ServerRest) StartListening() {
