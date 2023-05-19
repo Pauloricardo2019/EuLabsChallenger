@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"eulabs_challenger/docs"
 	"eulabs_challenger/internal/model"
 	"fmt"
 	"github.com/labstack/echo/v4"
@@ -26,6 +27,11 @@ func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
+
+	docs.SwaggerInfo.Title = "EULABS CHALLENGER - API"
+	docs.SwaggerInfo.Description = "API CHALLENGER EULABS"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Schemes = []string{"https", "http"}
 
 	server := &ServerRest{
 		Engine:      e,

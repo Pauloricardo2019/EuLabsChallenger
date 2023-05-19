@@ -10,7 +10,6 @@ type GetByProductIDResponse struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Price       float64   `json:"price"`
-	Quantity    int       `json:"quantity"`
 	CreateAt    time.Time `json:"create_at"`
 	UpdateAt    time.Time `json:"update_at"`
 }
@@ -20,7 +19,6 @@ func (g *GetByProductIDResponse) ParseFromProductVO(product *model.Product) {
 	g.Name = product.Name
 	g.Description = product.Description
 	g.Price = product.Price
-	g.Quantity = product.Quantity
 	g.CreateAt = product.CreatedAt
 	g.UpdateAt = product.UpdatedAt
 }

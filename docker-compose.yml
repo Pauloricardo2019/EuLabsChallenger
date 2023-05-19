@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: eulabs123
-      MYSQL_DATABASE: challenger
+      MYSQL_DATABASE: eulabs
       MYSQL_USER: user
       MYSQL_PASSWORD: eulabs123
     ports:

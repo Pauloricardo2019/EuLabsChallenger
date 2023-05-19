@@ -19,6 +19,15 @@ func NewControllerProduct(productFacade productFacade) *productController {
 	}
 }
 
+// @Summary create product router
+// @Description create product router
+// @Tags Product
+// @Accept json
+// @Param createProductRequest body dto.CreateProductRequest true "create product"
+// @Produce json
+// @Success 201 {object} dto.CreateProductResponse
+// @Failure 500 {object} error
+// @Router /eulabs/v1/product [post]
 func (p *productController) CreateProduct(c echo.Context) error {
 
 	ctx := context.Background()
@@ -37,6 +46,15 @@ func (p *productController) CreateProduct(c echo.Context) error {
 	return c.JSON(http.StatusCreated, product)
 }
 
+// @Summary get product by id router
+// @Description get product by id router
+// @Tags Product
+// @Accept json
+// @Param id path int true "id product"
+// @Produce json
+// @Success 200 {object} dto.GetByProductIDResponse
+// @Failure 500 {object} error
+// @Router /eulabs/v1/product/{id} [get]
 func (p *productController) GetProductByID(c echo.Context) error {
 	ctx := context.Background()
 
@@ -58,6 +76,16 @@ func (p *productController) GetProductByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
+// @Summary get all products by pagination router
+// @Description get all products by pagination router
+// @Tags Product
+// @Accept json
+// @Param limit query int false "limit"
+// @Param offset query int false "offset"
+// @Produce json
+// @Success 200 {object} dto.GetAllProductsResponse
+// @Failure 500 {object} error
+// @Router /eulabs/v1/product [get]
 func (p *productController) GetAllProducts(c echo.Context) error {
 	ctx := context.Background()
 
@@ -78,6 +106,16 @@ func (p *productController) GetAllProducts(c echo.Context) error {
 	return c.JSON(http.StatusOK, products)
 }
 
+// @Summary update product router
+// @Description update product router
+// @Tags Product
+// @Accept json
+// @Param id path int true "id product"
+// @Param updateProductRequest body dto.UpdateProductRequest true "update product"
+// @Produce json
+// @Success 200 {string} string "Product updated successfully"
+// @Failure 500 {object} error
+// @Router /eulabs/v1/product/{id} [put]
 func (p *productController) UpdateProduct(c echo.Context) error {
 	ctx := context.Background()
 
@@ -100,6 +138,15 @@ func (p *productController) UpdateProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Product updated successfully")
 }
 
+// @Summary delete product router
+// @Description delete product router
+// @Tags Product
+// @Accept json
+// @Param id path int true "id product"
+// @Produce json
+// @Success 200 {string} string "Product deleted successfully"
+// @Failure 500 {object} error
+// @Router /eulabs/v1/product/{id} [delete]
 func (p *productController) DeleteProduct(c echo.Context) error {
 	ctx := context.Background()
 

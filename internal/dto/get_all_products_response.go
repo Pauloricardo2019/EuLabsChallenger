@@ -21,7 +21,6 @@ type Product struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Price       float64   `json:"price"`
-	Quantity    int       `json:"quantity"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
@@ -37,7 +36,6 @@ func (g *GetAllProductsResponse) ParseFromProductVO(products []model.Product, li
 			Name:        product.Name,
 			Description: product.Description,
 			Price:       product.Price,
-			Quantity:    product.Quantity,
 			CreatedAt:   product.CreatedAt,
 			UpdatedAt:   product.UpdatedAt,
 		})

@@ -10,13 +10,13 @@ func init() {
 		ID: "202305191152_create_product_table",
 		Migrate: func(tx *gorm.DB) error {
 
-			sql := `CREATE TABLE IF NOT EXISTS product (
+			sql := `CREATE TABLE IF NOT EXISTS products (
 					id INT AUTO_INCREMENT PRIMARY KEY,
 					name VARCHAR(255) NOT NULL,
 					description VARCHAR(255) NOT NULL,
 					price FLOAT NOT NULL,
-					created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-					updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+					created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 				)`
 			if err := tx.Exec(sql).Error; err != nil {
 				return err

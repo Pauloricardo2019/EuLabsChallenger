@@ -66,7 +66,7 @@ func main() {
 	)
 
 	fmt.Println("Run server...")
-
+	//swag init --parseDependency -g ./cmd/api/main.go
 	serverRest.StartListening()
 
 }

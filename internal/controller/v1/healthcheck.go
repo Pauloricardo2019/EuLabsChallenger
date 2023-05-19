@@ -17,8 +17,8 @@ func NewHealthCheckController() *healthCheckController {
 // @Tags Healthcheck
 // @Accept json
 // @Produce json
-// @Success 200 {string}
-// @Router /eulabs/v1/healthcheck [get]
+// @Success 200 {string} string "OK"
+// @Router /eulabs/v1/health [get]
 func (healthCheckController) HealthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, "OK")
 }
