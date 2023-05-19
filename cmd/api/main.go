@@ -24,7 +24,7 @@ func main() {
 	cfg := config.NewConfig()
 
 	//Get Database Connection
-	dbProvider := provider.NewDatabaseProvider(cfg)
+	dbProvider := provider.NewDatabaseProvider(cfg.GetConfig())
 
 	dbConn, err := dbProvider.Connect()
 	if err != nil {
@@ -45,7 +45,7 @@ func main() {
 	productController := v1.NewControllerProduct(productFacade)
 
 	serverRest := rest.NewRestServer(
-		cfg,
+		cfg.GetConfig(),
 		&rest.Controllers{
 			ProductController: productController,
 		},

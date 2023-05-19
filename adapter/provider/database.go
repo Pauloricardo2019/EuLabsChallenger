@@ -17,7 +17,7 @@ func NewDatabaseProvider(config *model.Config) *databaseProvider {
 }
 
 func (d *databaseProvider) Connect() (*gorm.DB, error) {
-	db, err := gorm.Open(mysql.Open(d.config.Database.DSN), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(d.config.DBConfig.ConnString), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}

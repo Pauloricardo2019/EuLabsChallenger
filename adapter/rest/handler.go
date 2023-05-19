@@ -37,20 +37,20 @@ func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 }
 
 func (s *ServerRest) registerRoutes() {
-	//routeV1 := s.Engine.Group("/v1")
-	//{
-	//	routeV1.GET("/health", s.controllers.HealthCheckController.HealthCheck)
-	//
-	//	productGroup := routeV1.Group("/product")
-	//	{
-	//		productGroup.POST("", s.controllers.ProductController.CreateProduct)
-	//		productGroup.GET("/:id", s.controllers.ProductController.GetProductByID)
-	//		productGroup.GET("", s.controllers.ProductController.GetAllProducts)
-	//		productGroup.PUT("/:id", s.controllers.ProductController.UpdateProduct)
-	//		productGroup.DELETE("/:id", s.controllers.ProductController.DeleteProduct)
-	//	}
-	//
-	//}
+	routeV1 := s.Engine.Group("/v1")
+	{
+		routeV1.GET("/health", s.controllers.HealthCheckController.HealthCheck)
+
+		productGroup := routeV1.Group("/product")
+		{
+			productGroup.POST("", s.controllers.ProductController.CreateProduct)
+			productGroup.GET("/:id", s.controllers.ProductController.GetProductByID)
+			productGroup.GET("", s.controllers.ProductController.GetAllProducts)
+			productGroup.PUT("/:id", s.controllers.ProductController.UpdateProduct)
+			productGroup.DELETE("/:id", s.controllers.ProductController.DeleteProduct)
+		}
+
+	}
 
 }
 
