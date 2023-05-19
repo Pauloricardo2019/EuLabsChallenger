@@ -2,6 +2,7 @@ package rest
 
 import (
 	"eulabs_challenger/internal/model"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"net/http"
@@ -36,19 +37,31 @@ func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 }
 
 func (s *ServerRest) registerRoutes() {
-	routeV1 := s.Engine.Group("/v1")
-	{
-		routeV1.GET("/health", s.controllers.HealthCheckController.HealthCheck)
+	//routeV1 := s.Engine.Group("/v1")
+	//{
+	//	routeV1.GET("/health", s.controllers.HealthCheckController.HealthCheck)
+	//
+	//	productGroup := routeV1.Group("/product")
+	//	{
+	//		productGroup.POST("", s.controllers.ProductController.CreateProduct)
+	//		productGroup.GET("/:id", s.controllers.ProductController.GetProductByID)
+	//		productGroup.GET("", s.controllers.ProductController.GetAllProducts)
+	//		productGroup.PUT("/:id", s.controllers.ProductController.UpdateProduct)
+	//		productGroup.DELETE("/:id", s.controllers.ProductController.DeleteProduct)
+	//	}
+	//
+	//}
 
-		productGroup := routeV1.Group("/product")
-		{
-			productGroup.POST("", s.controllers.ProductController.CreateProduct)
-			productGroup.GET("/:id", s.controllers.ProductController.GetProductByID)
-			productGroup.GET("", s.controllers.ProductController.GetAllProducts)
-			productGroup.PUT("/:id", s.controllers.ProductController.UpdateProduct)
-			productGroup.DELETE("/:id", s.controllers.ProductController.DeleteProduct)
-		}
+}
 
+func (s *ServerRest) StartListening() {
+	s.httpServer = &http.Server{
+		Addr:    fmt.Sprintf(":%d", s.config.RestPort),
+		Handler: s.Engine,
 	}
 
+	fmt.Println("Listening on port", s.config.RestPort)
+	if err := s.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		panic(err.Error())
+	}
 }

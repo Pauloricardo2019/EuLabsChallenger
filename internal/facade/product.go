@@ -59,8 +59,10 @@ func (p *productFacade) GetAllProducts(ctx context.Context, limit, offset int) (
 	return productsResponse, nil
 }
 
-func (p *productFacade) UpdateProduct(ctx context.Context, product *dto.UpdateProductRequest) error {
+func (p *productFacade) UpdateProduct(ctx context.Context, productID uint64, product *dto.UpdateProductRequest) error {
+	product.ID = productID
 	productVO := product.ConvertToProductVO()
+
 	productVO, err := p.productService.Update(ctx, productVO)
 	if err != nil {
 		return err
