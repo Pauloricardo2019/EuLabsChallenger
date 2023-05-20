@@ -4,15 +4,16 @@ import (
 	"eulabs_challenger/cmd/migration/migrations"
 	"eulabs_challenger/internal/config"
 	"github.com/go-gormigrate/gormigrate/v2"
+	_ "github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 )
 
 func main() {
-	cfg := config.NewConfig()
+	cfg := config.NewConfig().GetConfig()
 
-	db, err := gorm.Open(mysql.Open(cfg.GetConfig().DBConfig.ConnString), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}

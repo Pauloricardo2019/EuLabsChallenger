@@ -66,6 +66,10 @@ func (b *BaseRepository) getConnection(ctx context.Context) (*gorm.DB, error) {
 	connWithTransaction, err := b.getTransaction(ctx)
 
 	if err != nil {
+		return nil, err
+	}
+
+	if connWithTransaction != nil {
 		result = connWithTransaction
 	} else {
 		result = b.db

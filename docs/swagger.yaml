@@ -1,0 +1,236 @@
+definitions:
+  eulabs_challenger_internal_dto.CreateProductRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  eulabs_challenger_internal_dto.CreateProductResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  eulabs_challenger_internal_dto.GetAllProductsResponse:
+    properties:
+      pagination:
+        $ref: '#/definitions/eulabs_challenger_internal_dto.ProductPagination'
+      products:
+        items:
+          $ref: '#/definitions/eulabs_challenger_internal_dto.Product'
+        type: array
+    type: object
+  eulabs_challenger_internal_dto.GetByProductIDResponse:
+    properties:
+      create_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+      update_at:
+        type: string
+    type: object
+  eulabs_challenger_internal_dto.Product:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  eulabs_challenger_internal_dto.ProductPagination:
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  eulabs_challenger_internal_dto.UpdateProductRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+paths:
+  /eulabs/v1/health:
+    get:
+      consumes:
+      - application/json
+      description: healthcheck router
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: healthcheck router
+      tags:
+      - Healthcheck
+  /eulabs/v1/product:
+    get:
+      consumes:
+      - application/json
+      description: get all products by pagination router
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/eulabs_challenger_internal_dto.GetAllProductsResponse'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: get all products by pagination router
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: create product router
+      parameters:
+      - description: create product
+        in: body
+        name: createProductRequest
+        required: true
+        schema:
+          $ref: '#/definitions/eulabs_challenger_internal_dto.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/eulabs_challenger_internal_dto.CreateProductResponse'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: create product router
+      tags:
+      - Product
+  /eulabs/v1/product/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete product router
+      parameters:
+      - description: id product
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product deleted successfully
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: delete product router
+      tags:
+      - Product
+    get:
+      consumes:
+      - application/json
+      description: get product by id router
+      parameters:
+      - description: id product
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/eulabs_challenger_internal_dto.GetByProductIDResponse'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: get product by id router
+      tags:
+      - Product
+    put:
+      consumes:
+      - application/json
+      description: update product router
+      parameters:
+      - description: id product
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: update product
+        in: body
+        name: updateProductRequest
+        required: true
+        schema:
+          $ref: '#/definitions/eulabs_challenger_internal_dto.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product updated successfully
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: update product router
+      tags:
+      - Product
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
