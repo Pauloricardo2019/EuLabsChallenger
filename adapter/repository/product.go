@@ -108,7 +108,7 @@ func (p *productRepository) Update(ctx context.Context, product *model.Product) 
 		return nil, err
 	}
 
-	if err = conn.Save(product).Error; err != nil {
+	if err = conn.Debug().Save(product).Error; err != nil {
 		return nil, err
 	}
 	p.logger.Debug("Product", zap.Any("product", product))

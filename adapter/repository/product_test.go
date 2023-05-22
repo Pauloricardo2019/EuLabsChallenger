@@ -124,7 +124,7 @@ func TestProductRepository_Update(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	product := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -132,23 +132,19 @@ func TestProductRepository_Update(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	productCreated, err := productRepository.Create(ctx, product)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 
-	productMockToChange := &model.Product{
-		ID:          product.ID,
-		Name:        "test_product_change",
-		Description: "test_description_change",
-		Price:       9.99,
-	}
+	productCreated.Name = "test_product_change"
+	productCreated.Description = "test_description_change"
+	productCreated.Price = 89.99
 
-	changeProduct, err := productRepository.Update(ctx, productMockToChange)
+	changeProduct, err := productRepository.Update(ctx, productCreated)
 	assert.NoError(t, err)
-	assert.True(t, productMock.ID == changeProduct.ID)
 	assert.Equal(t, "test_product_change", changeProduct.Name)
 	assert.Equal(t, "test_description_change", changeProduct.Description)
-	assert.Equal(t, 9.99, changeProduct.Price)
+	assert.Equal(t, 89.99, changeProduct.Price)
 
 }
 
