@@ -5,15 +5,22 @@ import (
 	"eulabs_challenger/internal/config"
 	"eulabs_challenger/internal/model"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"testing"
 )
 
+var logger *zap.Logger
+
+func init() {
+	logger, _ = zap.NewDevelopment()
+}
+
 func TestProductRepository_Create(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -23,7 +30,7 @@ func TestProductRepository_Create(t *testing.T) {
 		Price:       10.0,
 	}
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)
@@ -34,7 +41,7 @@ func TestProductRepository_Create(t *testing.T) {
 func TestProductRepository_GetCount(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -44,7 +51,7 @@ func TestProductRepository_GetCount(t *testing.T) {
 		Price:       10.0,
 	}
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)
@@ -59,7 +66,7 @@ func TestProductRepository_GetCount(t *testing.T) {
 func TestProductRepository_GetByID(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -69,7 +76,7 @@ func TestProductRepository_GetByID(t *testing.T) {
 		Price:       10.0,
 	}
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)
@@ -85,7 +92,7 @@ func TestProductRepository_GetByID(t *testing.T) {
 func TestProductRepository_GetAll(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -98,7 +105,7 @@ func TestProductRepository_GetAll(t *testing.T) {
 	limit := 10
 	offset := 0
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)
@@ -113,7 +120,7 @@ func TestProductRepository_GetAll(t *testing.T) {
 func TestProductRepository_Update(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -123,7 +130,7 @@ func TestProductRepository_Update(t *testing.T) {
 		Price:       10.0,
 	}
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)
@@ -148,7 +155,7 @@ func TestProductRepository_Update(t *testing.T) {
 func TestProductRepository_Delete(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig().GetConfig()
+	cfg := config.NewConfig(logger).GetConfig()
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -158,7 +165,7 @@ func TestProductRepository_Delete(t *testing.T) {
 		Price:       10.0,
 	}
 
-	productRepository := NewProductRepository(db)
+	productRepository := NewProductRepository(db, logger)
 
 	product, err := productRepository.Create(ctx, productMock)
 	assert.NoError(t, err)

@@ -24,6 +24,7 @@ type ServerRest struct {
 
 func NewRestServer(cfg *model.Config, controllers *Controllers) *ServerRest {
 	e := echo.New()
+
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())

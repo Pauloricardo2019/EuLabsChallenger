@@ -5,13 +5,17 @@ import (
 	"eulabs_challenger/internal/config"
 	"github.com/go-gormigrate/gormigrate/v2"
 	_ "github.com/go-gormigrate/gormigrate/v2"
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 )
 
 func main() {
-	cfg := config.NewConfig().GetConfig()
+	logger := zap.NewExample()
+	defer logger.Sync()
+
+	cfg := config.NewConfig(logger).GetConfig()
 
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	if err != nil {

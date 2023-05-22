@@ -7,12 +7,12 @@ import (
 )
 
 type (
-	productServiceMock struct {
+	ProductServiceMock struct {
 		mock.Mock
 	}
 )
 
-func (p *productServiceMock) Create(ctx context.Context, product *model.Product) (*model.Product, error) {
+func (p *ProductServiceMock) Create(ctx context.Context, product *model.Product) (*model.Product, error) {
 	args := p.Called(ctx, product)
 
 	var productReq *model.Product
@@ -29,7 +29,7 @@ func (p *productServiceMock) Create(ctx context.Context, product *model.Product)
 	return productReq, err
 }
 
-func (p *productServiceMock) GetCount(ctx context.Context) (int64, error) {
+func (p *ProductServiceMock) GetCount(ctx context.Context) (int64, error) {
 	args := p.Called(ctx)
 
 	var err error
@@ -46,7 +46,7 @@ func (p *productServiceMock) GetCount(ctx context.Context) (int64, error) {
 	return count, err
 }
 
-func (p *productServiceMock) GetByID(ctx context.Context, id uint64) (bool, *model.Product, error) {
+func (p *ProductServiceMock) GetByID(ctx context.Context, id uint64) (bool, *model.Product, error) {
 	args := p.Called(ctx, id)
 
 	found := args.Get(0).(bool)
@@ -65,7 +65,7 @@ func (p *productServiceMock) GetByID(ctx context.Context, id uint64) (bool, *mod
 	return found, product, err
 }
 
-func (p *productServiceMock) GetAll(ctx context.Context, limit, offset int) ([]model.Product, error) {
+func (p *ProductServiceMock) GetAll(ctx context.Context, limit, offset int) ([]model.Product, error) {
 	args := p.Called(ctx, limit, offset)
 
 	var products []model.Product
@@ -82,7 +82,7 @@ func (p *productServiceMock) GetAll(ctx context.Context, limit, offset int) ([]m
 	return products, err
 }
 
-func (p *productServiceMock) Update(ctx context.Context, product *model.Product) (*model.Product, error) {
+func (p *ProductServiceMock) Update(ctx context.Context, product *model.Product) (*model.Product, error) {
 	args := p.Called(ctx, product)
 
 	var productReq *model.Product
@@ -99,7 +99,7 @@ func (p *productServiceMock) Update(ctx context.Context, product *model.Product)
 	return productReq, err
 }
 
-func (p *productServiceMock) Delete(ctx context.Context, id uint64) error {
+func (p *ProductServiceMock) Delete(ctx context.Context, id uint64) error {
 	args := p.Called(ctx, id)
 
 	var err error

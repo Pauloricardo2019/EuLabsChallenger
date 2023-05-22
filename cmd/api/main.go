@@ -8,7 +8,8 @@ import (
 	"eulabs_challenger/internal/controller/v1"
 	"eulabs_challenger/internal/facade"
 	"eulabs_challenger/internal/service"
-	"fmt"
+	"go.uber.org/zap"
+	"time"
 )
 
 // @contact.name API Support
@@ -21,41 +22,58 @@ import (
 // @in header
 // @name Authorization
 func main() {
-	//Config
-	cfg := config.NewConfig().GetConfig()
 
-	fmt.Println("Setup config")
+	logger := zap.NewExample()
+
+	defer logger.Sync()
+
+	//Config
+	cfg := config.NewConfig(logger).GetConfig()
+
+	logger.Info("Setup config",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	//Get Database Connection
-	dbProvider := provider.NewDatabaseProvider(cfg)
+	dbProvider := provider.NewDatabaseProvider(cfg, logger)
 	dbConn, err := dbProvider.Connect()
 	if err != nil {
 		panic(err)
 		return
 	}
 
-	fmt.Println("Setup database")
+	logger.Info("Setup database",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	//Get Repositories
-	productRepository := repository.NewProductRepository(dbConn)
+	productRepository := repository.NewProductRepository(dbConn, logger)
 
-	fmt.Println("Setup repositories")
+	logger.Info("Setup repositories",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	//Get Services
-	productService := service.NewProductService(productRepository)
+	productService := service.NewProductService(productRepository, logger)
 
-	fmt.Println("Setup services")
+	logger.Info("Setup services",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	//Get Facades
-	productFacade := facade.NewProductFacade(productService)
+	productFacade := facade.NewProductFacade(productService, logger)
 
-	fmt.Println("Setup facades")
+	logger.Info("Setup facades",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	//Get Controllers
-	productController := v1.NewControllerProduct(productFacade)
+	productController := v1.NewControllerProduct(productFacade, logger)
 	healthCheckController := v1.NewHealthCheckController()
 
-	fmt.Println("Setup controllers")
+	logger.Info("Setup controllers",
+		zap.Time("StartedAt", time.Now()),
+	)
 
 	serverRest := rest.NewRestServer(
 		cfg,
@@ -65,7 +83,10 @@ func main() {
 		},
 	)
 
-	fmt.Println("Run server...")
+	logger.Info("Setup server",
+		zap.Time("StartedAt", time.Now()),
+	)
+
 	//swag init --parseDependency -g ./cmd/api/main.go
 	serverRest.StartListening()
 
