@@ -28,17 +28,13 @@ Para usar EulabsApi, siga estas etapas:
 
 - Instale as dependências do projeto utilizando o comando “go mod tidy”
 
-- rode o comando “go get -u swag” para baixar as dependências do swagger 
+- rode o comando “go get -u github.com/swaggo/swag/cmd/swag” para baixar as dependências do swagger 
 
-- rode o comando “docker-compose up -d” para subir o banco de dados utilizado no docker
+- rode o comando “docker-compose up -d” para subir o banco de dados 
 
 - execute a função main.go do path “./cmd/migrations/main.go”, para subir as migrações do banco de dados 
 
 - Execute a função main.go do path “./cmd/api/main.go”, para iniciar a api
-
-- Execute o comando “go test —“ para visualizar todos os testes unitários e de integração 
-
-
 
 
 Para contribuir com EulabsApi, siga estas etapas:
