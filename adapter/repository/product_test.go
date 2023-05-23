@@ -24,7 +24,7 @@ func TestProductRepository_Create(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -32,7 +32,7 @@ func TestProductRepository_Create(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	product, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 
@@ -45,7 +45,7 @@ func TestProductRepository_GetCount(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -53,7 +53,7 @@ func TestProductRepository_GetCount(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	product, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 
@@ -70,7 +70,7 @@ func TestProductRepository_GetByID(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -78,14 +78,14 @@ func TestProductRepository_GetByID(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	product, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 
 	found, productFound, err := productRepository.GetByID(ctx, product.ID)
 	assert.NoError(t, err)
 	assert.True(t, found)
-	assert.True(t, productFound.ID == productMock.ID)
+	assert.True(t, productFound.ID == productToCreate.ID)
 
 }
 
@@ -96,7 +96,7 @@ func TestProductRepository_GetAll(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -107,7 +107,7 @@ func TestProductRepository_GetAll(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	product, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 
@@ -124,7 +124,7 @@ func TestProductRepository_Update(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	product := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -132,9 +132,9 @@ func TestProductRepository_Update(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	productCreated, err := productRepository.Create(ctx, product)
+	productCreated, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
-	assert.True(t, product.ID > 0)
+	assert.True(t, productToCreate.ID > 0)
 
 	productCreated.Name = "test_product_change"
 	productCreated.Description = "test_description_change"
@@ -155,7 +155,7 @@ func TestProductRepository_Delete(t *testing.T) {
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
@@ -163,7 +163,7 @@ func TestProductRepository_Delete(t *testing.T) {
 
 	productRepository := NewProductRepository(db, logger)
 
-	product, err := productRepository.Create(ctx, productMock)
+	product, err := productRepository.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, product.ID > 0)
 

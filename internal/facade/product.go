@@ -97,7 +97,21 @@ func (p *productFacade) UpdateProduct(ctx context.Context, productID uint64, pro
 	p.logger.Debug("ProductVO", zap.Any("product", productVO))
 	p.logger.Debug("Product ID", zap.Uint64("id", productID))
 
-	_, err := p.productService.Update(ctx, productVO)
+	found, productFound, err := p.productService.GetByID(ctx, productID)
+	if err != nil {
+		return err
+	}
+	p.logger.Info("GetByIDProduct")
+	if !found {
+		return errors.New("product not found")
+	}
+	p.logger.Debug("Product found", zap.Any("product", productFound), zap.Bool("found", found))
+
+	productFound.Name = productVO.Name
+	productFound.Description = productVO.Description
+	productFound.Price = productVO.Price
+
+	_, err = p.productService.Update(ctx, productFound)
 	p.logger.Warn("Product was updated but I'm not using on moment")
 	if err != nil {
 		return err

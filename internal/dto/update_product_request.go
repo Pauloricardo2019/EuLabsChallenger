@@ -6,7 +6,7 @@ type UpdateProductRequest struct {
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
-}
+} // @name UpdateProductRequest
 
 func (u *UpdateProductRequest) ConvertToProductVO() *model.Product {
 	return &model.Product{

@@ -22,13 +22,13 @@ func TestProductService_Create(t *testing.T) {
 
 	productRepositoryMock := &mocks.ProductRepositoryMock{}
 
-	productMock := &model.Product{
+	productToCreate := &model.Product{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
 	}
 
-	productMockCreated := &model.Product{
+	productCreated := &model.Product{
 		ID:          1,
 		Name:        "test_product",
 		Description: "test_description",
@@ -37,13 +37,13 @@ func TestProductService_Create(t *testing.T) {
 
 	productRepositoryMock.On("Create", ctx, mock.Anything).
 		Return(
-			productMockCreated,
+			productCreated,
 			nil,
 		)
 
 	productService := NewProductService(productRepositoryMock, logger)
 
-	productCreated, err := productService.Create(ctx, productMock)
+	productCreated, err := productService.Create(ctx, productToCreate)
 	assert.NoError(t, err)
 	assert.True(t, productCreated.ID == 1)
 
@@ -75,7 +75,7 @@ func TestProductService_GetByID(t *testing.T) {
 
 	idMock := uint64(1)
 
-	productMockFound := &model.Product{
+	productFound := &model.Product{
 		ID:          1,
 		Name:        "test_product",
 		Description: "test_description",
@@ -87,7 +87,7 @@ func TestProductService_GetByID(t *testing.T) {
 	productRepositoryMock.On("GetByID", ctx, idMock).
 		Return(
 			true,
-			productMockFound,
+			productFound,
 			nil,
 		)
 
@@ -105,7 +105,7 @@ func TestProductService_GetAll(t *testing.T) {
 
 	productRepositoryMock := &mocks.ProductRepositoryMock{}
 
-	productsMock := []model.Product{
+	productsFound := []model.Product{
 		{
 			ID:          1,
 			Name:        "test_product",
@@ -126,7 +126,7 @@ func TestProductService_GetAll(t *testing.T) {
 
 	productRepositoryMock.On("GetAll", ctx, mock.Anything, mock.Anything).
 		Return(
-			productsMock,
+			productsFound,
 			nil,
 		)
 
@@ -143,34 +143,38 @@ func TestProductService_Update(t *testing.T) {
 
 	productRepositoryMock := &mocks.ProductRepositoryMock{}
 
-	productMock := &model.Product{
+	productToUpdate := &model.Product{
 		ID:          1,
-		Name:        "test_product",
-		Description: "test_description",
+		Name:        "test_product_change",
+		Description: "test_description_change",
 		Price:       10.0,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}
 
-	productToUpdated := &model.Product{
+	productUpdated := &model.Product{
 		ID:          1,
-		Name:        "test_product_updated",
-		Description: "test_description_updated",
-		Price:       99.90,
+		Name:        "test_product_change",
+		Description: "test_description_change",
+		Price:       10.0,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}
 
 	productRepositoryMock.On("Update", ctx, mock.Anything).
 		Return(
-			productToUpdated,
+			productUpdated,
 			nil,
 		)
 
 	productService := NewProductService(productRepositoryMock, logger)
 
-	productUpdated, err := productService.Update(ctx, productMock)
+	productUpdated, err := productService.Update(ctx, productToUpdate)
 	assert.NoError(t, err)
 	assert.True(t, productUpdated.ID == 1)
-	assert.True(t, productUpdated.Name == "test_product_updated")
-	assert.True(t, productUpdated.Description == "test_description_updated")
-	assert.True(t, productUpdated.Price == 99.90)
+	assert.True(t, productUpdated.Name == "test_product_change")
+	assert.True(t, productUpdated.Description == "test_description_change")
+	assert.True(t, productUpdated.Price == 10.0)
 }
 
 func TestProductService_Delete(t *testing.T) {
@@ -178,15 +182,15 @@ func TestProductService_Delete(t *testing.T) {
 
 	productRepositoryMock := &mocks.ProductRepositoryMock{}
 
-	idMock := uint64(1)
+	productID := uint64(1)
 
-	productRepositoryMock.On("Delete", ctx, idMock).
+	productRepositoryMock.On("Delete", ctx, productID).
 		Return(
 			nil,
 		)
 
 	productService := NewProductService(productRepositoryMock, logger)
 
-	err := productService.Delete(ctx, idMock)
+	err := productService.Delete(ctx, productID)
 	assert.NoError(t, err)
 }

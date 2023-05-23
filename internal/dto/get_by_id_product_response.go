@@ -12,7 +12,7 @@ type GetByProductIDResponse struct {
 	Price       float64   `json:"price"`
 	CreateAt    time.Time `json:"create_at"`
 	UpdateAt    time.Time `json:"update_at"`
-}
+} // @name GetByProductIDResponse
 
 func (g *GetByProductIDResponse) ParseFromProductVO(product *model.Product) {
 	g.ID = product.ID

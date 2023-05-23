@@ -9,12 +9,12 @@ type ProductPagination struct {
 	Limit  int   `json:"limit"`
 	Offset int   `json:"offset"`
 	Total  int64 `json:"total"`
-}
+} // @name ProductPagination
 
 type GetAllProductsResponse struct {
 	Products   []Product         `json:"products"`
 	Pagination ProductPagination `json:"pagination"`
-}
+} // @name GetAllProductsResponse
 
 type Product struct {
 	ID          uint64    `json:"id"`
@@ -23,7 +23,7 @@ type Product struct {
 	Price       float64   `json:"price"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
-}
+} // @name Product
 
 func (g *GetAllProductsResponse) ParseFromProductVO(products []model.Product, limit, offset int, total int64) {
 	g.Pagination.Limit = limit

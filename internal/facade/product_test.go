@@ -23,13 +23,13 @@ func TestProductFacade_CreateProduct(t *testing.T) {
 
 	productServiceMock := &mocks.ProductServiceMock{}
 
-	productMock := &dto.CreateProductRequest{
+	productToCreate := &dto.CreateProductRequest{
 		Name:        "test_product",
 		Description: "test_description",
 		Price:       10.0,
 	}
 
-	productMockCreated := &model.Product{
+	productCreated := &model.Product{
 		ID:          1,
 		Name:        "test_product",
 		Description: "test_description",
@@ -40,15 +40,15 @@ func TestProductFacade_CreateProduct(t *testing.T) {
 
 	productServiceMock.On("Create", ctx, mock.Anything).
 		Return(
-			productMockCreated,
+			productCreated,
 			nil,
 		)
 
 	productFacade := NewProductFacade(productServiceMock, logger)
 
-	productCreated, err := productFacade.CreateProduct(ctx, productMock)
+	product, err := productFacade.CreateProduct(ctx, productToCreate)
 	assert.NoError(t, err)
-	assert.True(t, productCreated.ID == 1)
+	assert.True(t, product.ID == 1)
 
 }
 
@@ -57,9 +57,9 @@ func TestProductFacade_GetByIDProduct(t *testing.T) {
 
 	productServiceMock := &mocks.ProductServiceMock{}
 
-	idMock := uint64(1)
+	productID := uint64(1)
 
-	productMockFound := &model.Product{
+	productFound := &model.Product{
 		ID:          1,
 		Name:        "test_product",
 		Description: "test_description",
@@ -71,18 +71,18 @@ func TestProductFacade_GetByIDProduct(t *testing.T) {
 	productServiceMock.On("GetByID", ctx, mock.Anything).
 		Return(
 			true,
-			productMockFound,
+			productFound,
 			nil,
 		)
 
 	productFacade := NewProductFacade(productServiceMock, logger)
 
-	productFound, err := productFacade.GetByIDProduct(ctx, idMock)
+	product, err := productFacade.GetByIDProduct(ctx, productID)
 	assert.NoError(t, err)
-	assert.True(t, productFound.ID == 1)
-	assert.True(t, productFound.Name == "test_product")
-	assert.True(t, productFound.Description == "test_description")
-	assert.True(t, productFound.Price == 10.0)
+	assert.True(t, product.ID == 1)
+	assert.True(t, product.Name == "test_product")
+	assert.True(t, product.Description == "test_description")
+	assert.True(t, product.Price == 10.0)
 
 }
 
@@ -94,7 +94,7 @@ func TestProductFacade_GetAllProducts(t *testing.T) {
 	limit := 10
 	offset := 0
 
-	productsMock := []model.Product{
+	productsFound := []model.Product{
 		{
 			ID:          1,
 			Name:        "test_product",
@@ -115,7 +115,7 @@ func TestProductFacade_GetAllProducts(t *testing.T) {
 
 	productServiceMock.On("GetAll", ctx, mock.Anything, mock.Anything).
 		Return(
-			productsMock,
+			productsFound,
 			nil,
 		)
 
@@ -139,7 +139,7 @@ func TestProductFacade_UpdateProduct(t *testing.T) {
 
 	productServiceMock := &mocks.ProductServiceMock{}
 
-	productIdMock := uint64(1)
+	productID := uint64(1)
 
 	productToUpdated := &dto.UpdateProductRequest{
 		Name:        "test_product_updated",
@@ -162,9 +162,16 @@ func TestProductFacade_UpdateProduct(t *testing.T) {
 			nil,
 		)
 
+	productServiceMock.On("GetByID", ctx, mock.Anything).
+		Return(
+			true,
+			productUpdated,
+			nil,
+		)
+
 	productFacade := NewProductFacade(productServiceMock, logger)
 
-	err := productFacade.UpdateProduct(ctx, productIdMock, productToUpdated)
+	err := productFacade.UpdateProduct(ctx, productID, productToUpdated)
 	assert.NoError(t, err)
 
 }
@@ -174,7 +181,7 @@ func TestProductFacade_DeleteProduct(t *testing.T) {
 
 	productServiceMock := &mocks.ProductServiceMock{}
 
-	productIdMock := uint64(1)
+	productID := uint64(1)
 
 	productServiceMock.On("Delete", ctx, mock.Anything).
 		Return(
@@ -183,7 +190,7 @@ func TestProductFacade_DeleteProduct(t *testing.T) {
 
 	productFacade := NewProductFacade(productServiceMock, logger)
 
-	err := productFacade.DeleteProduct(ctx, productIdMock)
+	err := productFacade.DeleteProduct(ctx, productID)
 	assert.NoError(t, err)
 
 }

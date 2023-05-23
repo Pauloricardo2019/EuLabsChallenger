@@ -1,5 +1,5 @@
 definitions:
-  eulabs_challenger_internal_dto.CreateProductRequest:
+  CreateProductRequest:
     properties:
       description:
         type: string
@@ -8,21 +8,21 @@ definitions:
       price:
         type: number
     type: object
-  eulabs_challenger_internal_dto.CreateProductResponse:
+  CreateProductResponse:
     properties:
       id:
         type: integer
     type: object
-  eulabs_challenger_internal_dto.GetAllProductsResponse:
+  GetAllProductsResponse:
     properties:
       pagination:
-        $ref: '#/definitions/eulabs_challenger_internal_dto.ProductPagination'
+        $ref: '#/definitions/ProductPagination'
       products:
         items:
-          $ref: '#/definitions/eulabs_challenger_internal_dto.Product'
+          $ref: '#/definitions/Product'
         type: array
     type: object
-  eulabs_challenger_internal_dto.GetByProductIDResponse:
+  GetByProductIDResponse:
     properties:
       create_at:
         type: string
@@ -34,12 +34,10 @@ definitions:
         type: string
       price:
         type: number
-      quantity:
-        type: integer
       update_at:
         type: string
     type: object
-  eulabs_challenger_internal_dto.Product:
+  Product:
     properties:
       created_at:
         type: string
@@ -51,12 +49,10 @@ definitions:
         type: string
       price:
         type: number
-      quantity:
-        type: integer
       updated_at:
         type: string
     type: object
-  eulabs_challenger_internal_dto.ProductPagination:
+  ProductPagination:
     properties:
       limit:
         type: integer
@@ -65,12 +61,10 @@ definitions:
       total:
         type: integer
     type: object
-  eulabs_challenger_internal_dto.UpdateProductRequest:
+  UpdateProductRequest:
     properties:
       description:
         type: string
-      id:
-        type: integer
       name:
         type: string
       price:
@@ -121,7 +115,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/eulabs_challenger_internal_dto.GetAllProductsResponse'
+            $ref: '#/definitions/GetAllProductsResponse'
         "500":
           description: Internal Server Error
           schema: {}
@@ -138,14 +132,14 @@ paths:
         name: createProductRequest
         required: true
         schema:
-          $ref: '#/definitions/eulabs_challenger_internal_dto.CreateProductRequest'
+          $ref: '#/definitions/CreateProductRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/eulabs_challenger_internal_dto.CreateProductResponse'
+            $ref: '#/definitions/CreateProductResponse'
         "500":
           description: Internal Server Error
           schema: {}
@@ -192,7 +186,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/eulabs_challenger_internal_dto.GetByProductIDResponse'
+            $ref: '#/definitions/GetByProductIDResponse'
         "500":
           description: Internal Server Error
           schema: {}
@@ -214,7 +208,7 @@ paths:
         name: updateProductRequest
         required: true
         schema:
-          $ref: '#/definitions/eulabs_challenger_internal_dto.UpdateProductRequest'
+          $ref: '#/definitions/UpdateProductRequest'
       produces:
       - application/json
       responses:

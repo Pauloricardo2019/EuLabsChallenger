@@ -87,7 +87,6 @@ func main() {
 		zap.Time("StartedAt", time.Now()),
 	)
 
-	//swag init --parseDependency -g ./cmd/api/main.go
 	serverRest.StartListening()
 
 }

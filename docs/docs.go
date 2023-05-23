@@ -79,7 +79,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/eulabs_challenger_internal_dto.GetAllProductsResponse"
+                            "$ref": "#/definitions/GetAllProductsResponse"
                         }
                     },
                     "500": {
@@ -107,7 +107,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/eulabs_challenger_internal_dto.CreateProductRequest"
+                            "$ref": "#/definitions/CreateProductRequest"
                         }
                     }
                 ],
@@ -115,7 +115,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/eulabs_challenger_internal_dto.CreateProductResponse"
+                            "$ref": "#/definitions/CreateProductResponse"
                         }
                     },
                     "500": {
@@ -151,7 +151,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/eulabs_challenger_internal_dto.GetByProductIDResponse"
+                            "$ref": "#/definitions/GetByProductIDResponse"
                         }
                     },
                     "500": {
@@ -186,7 +186,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/eulabs_challenger_internal_dto.UpdateProductRequest"
+                            "$ref": "#/definitions/UpdateProductRequest"
                         }
                     }
                 ],
@@ -240,7 +240,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "eulabs_challenger_internal_dto.CreateProductRequest": {
+        "CreateProductRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -254,7 +254,7 @@ const docTemplate = `{
                 }
             }
         },
-        "eulabs_challenger_internal_dto.CreateProductResponse": {
+        "CreateProductResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -262,21 +262,21 @@ const docTemplate = `{
                 }
             }
         },
-        "eulabs_challenger_internal_dto.GetAllProductsResponse": {
+        "GetAllProductsResponse": {
             "type": "object",
             "properties": {
                 "pagination": {
-                    "$ref": "#/definitions/eulabs_challenger_internal_dto.ProductPagination"
+                    "$ref": "#/definitions/ProductPagination"
                 },
                 "products": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/eulabs_challenger_internal_dto.Product"
+                        "$ref": "#/definitions/Product"
                     }
                 }
             }
         },
-        "eulabs_challenger_internal_dto.GetByProductIDResponse": {
+        "GetByProductIDResponse": {
             "type": "object",
             "properties": {
                 "create_at": {
@@ -294,15 +294,12 @@ const docTemplate = `{
                 "price": {
                     "type": "number"
                 },
-                "quantity": {
-                    "type": "integer"
-                },
                 "update_at": {
                     "type": "string"
                 }
             }
         },
-        "eulabs_challenger_internal_dto.Product": {
+        "Product": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -320,15 +317,12 @@ const docTemplate = `{
                 "price": {
                     "type": "number"
                 },
-                "quantity": {
-                    "type": "integer"
-                },
                 "updated_at": {
                     "type": "string"
                 }
             }
         },
-        "eulabs_challenger_internal_dto.ProductPagination": {
+        "ProductPagination": {
             "type": "object",
             "properties": {
                 "limit": {
@@ -342,14 +336,11 @@ const docTemplate = `{
                 }
             }
         },
-        "eulabs_challenger_internal_dto.UpdateProductRequest": {
+        "UpdateProductRequest": {
             "type": "object",
             "properties": {
                 "description": {
                     "type": "string"
-                },
-                "id": {
-                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
