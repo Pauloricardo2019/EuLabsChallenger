@@ -28,6 +28,11 @@ Para usar EulabsApi, siga estas etapas:
 
 - Execute a função main.go do path “./cmd/api/main.go”, para iniciar a api
 
+## 🔧 Rodando testes:
+
+### Unit Tests && Integration Tests
+
+- go test ./adapter/repository/ ./internal/service ./internal/facade ./internal/controller/v1
 
 Para contribuir com EulabsApi, siga estas etapas:
 
