@@ -11,11 +11,13 @@ import (
 	"log"
 )
 
+var envPath = "../dev.env"
+
 func main() {
 	logger := zap.NewExample()
 	defer logger.Sync()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	if err != nil {

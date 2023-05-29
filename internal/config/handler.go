@@ -3,6 +3,7 @@ package config
 import (
 	"eulabs_challenger/internal/model"
 	"fmt"
+	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 	"os"
 	"strconv"
@@ -20,7 +21,13 @@ func NewConfig(logger *zap.Logger) *config {
 	}
 }
 
-func (c *config) GetConfig() *model.Config {
+func (c *config) GetConfig(envFile string) *model.Config {
+
+	err := godotenv.Load(envFile)
+	if err != nil {
+		zap.Error(err)
+	}
+
 	c.logger.Info("Init config",
 		zap.Time("StartedAt", time.Now()),
 	)

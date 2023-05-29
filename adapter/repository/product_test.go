@@ -12,6 +12,7 @@ import (
 )
 
 var logger *zap.Logger
+var envPath = "../../dev.env"
 
 func init() {
 	logger, _ = zap.NewDevelopment()
@@ -20,7 +21,7 @@ func init() {
 func TestProductRepository_Create(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -41,7 +42,7 @@ func TestProductRepository_Create(t *testing.T) {
 func TestProductRepository_GetCount(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -66,7 +67,7 @@ func TestProductRepository_GetCount(t *testing.T) {
 func TestProductRepository_GetByID(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -92,7 +93,7 @@ func TestProductRepository_GetByID(t *testing.T) {
 func TestProductRepository_GetAll(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -120,7 +121,7 @@ func TestProductRepository_GetAll(t *testing.T) {
 func TestProductRepository_Update(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 
@@ -151,7 +152,7 @@ func TestProductRepository_Update(t *testing.T) {
 func TestProductRepository_Delete(t *testing.T) {
 	ctx := context.Background()
 
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 	db, err := gorm.Open(mysql.Open(cfg.DBConfig.ConnString), &gorm.Config{})
 	assert.NoError(t, err)
 

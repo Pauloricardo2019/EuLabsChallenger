@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+var envPath = "./dev.env"
+
 // @contact.name API Support
 // @contact.url http://www.swagger.io/support
 // @contact.email support@swagger.io
@@ -28,7 +30,7 @@ func main() {
 	defer logger.Sync()
 
 	//Config
-	cfg := config.NewConfig(logger).GetConfig()
+	cfg := config.NewConfig(logger).GetConfig(envPath)
 
 	logger.Info("Setup config",
 		zap.Time("StartedAt", time.Now()),
