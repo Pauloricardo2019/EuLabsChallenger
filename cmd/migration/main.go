@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-var envPath = "../dev.env"
+var envPath = "./dev.env"
 
 func main() {
 	logger := zap.NewExample()
